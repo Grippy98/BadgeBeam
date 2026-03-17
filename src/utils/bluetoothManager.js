@@ -24,8 +24,9 @@ export const connectToBadge = async (onDisconnect) => {
         await BleClient.initialize();
         
         const device = await BleClient.requestDevice({
-            // Filter by name prefix to only show BeagleBadge devices, ignoring other BLE devices.
-            namePrefix: 'beagle',
+            // The BeagleBadge BLE controller advertises its default hardware alias ("P-PRE3 EntOS RCU") 
+            // instead of the software LEAdvertisement name. Use acceptAllDevices so it can be selected.
+            acceptAllDevices: true,
             optionalServices: [BADGE_SERVICE_UUID]
         });
 
