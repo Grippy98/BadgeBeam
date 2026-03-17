@@ -24,9 +24,9 @@ export const connectToBadge = async (onDisconnect) => {
         await BleClient.initialize();
         
         const device = await BleClient.requestDevice({
-            // Now that the BLE Advertising packet correctly includes the LocalName, 
-            // we can confidently filter by this case-sensitive prefix.
-            namePrefix: 'Beagle',
+            // The BeagleBadge BLE controller natively advertises its hardware alias instead of its software name.
+            // By filtering exactly by our custom Service UUID, we guarantee we find the badge regardless of its name.
+            services: [BADGE_SERVICE_UUID],
             optionalServices: [BADGE_SERVICE_UUID]
         });
 
