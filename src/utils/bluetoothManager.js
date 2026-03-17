@@ -24,9 +24,8 @@ export const connectToBadge = async (onDisconnect) => {
         await BleClient.initialize();
         
         const device = await BleClient.requestDevice({
-            // Many devices don't advertise their full 128-bit Service UUIDs to save packet space.
-            // Using acceptAllDevices ensures Chrome shows the raw beacon name in the pairing dialog.
-            acceptAllDevices: true,
+            // Filter by name prefix to only show BeagleBadge devices, ignoring other BLE devices.
+            namePrefix: 'beagle',
             optionalServices: [BADGE_SERVICE_UUID]
         });
 
