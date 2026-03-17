@@ -24,9 +24,9 @@ export const connectToBadge = async (onDisconnect) => {
         await BleClient.initialize();
         
         const device = await BleClient.requestDevice({
-            // Chrome strictly filters devices when scanning. We need to accept all and allow
-            // the user to pick "P-PRE3 EntOS RCU" or "BeagleBadge" manually.
-            acceptAllDevices: true,
+            // Strict filtering: We exclusively look for devices broadcasting our custom 128-bit Service UUID.
+            // This ensures we only ever see the BeagleBadge, regardless of what its hardware alias is.
+            services: [BADGE_SERVICE_UUID],
             optionalServices: [BADGE_SERVICE_UUID]
         });
 
