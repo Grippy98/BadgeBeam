@@ -24,9 +24,9 @@ export const connectToBadge = async (onDisconnect) => {
         await BleClient.initialize();
         
         const device = await BleClient.requestDevice({
-            // The BeagleBadge BLE controller natively advertises its hardware alias instead of its software name.
-            // By filtering exactly by our custom Service UUID, we guarantee we find the badge regardless of its name.
-            services: [BADGE_SERVICE_UUID],
+            // Chrome strictly filters devices when scanning. We need to accept all and allow
+            // the user to pick "P-PRE3 EntOS RCU" or "BeagleBadge" manually.
+            acceptAllDevices: true,
             optionalServices: [BADGE_SERVICE_UUID]
         });
 
